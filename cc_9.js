@@ -1,4 +1,4 @@
-//Task 1: Creating an Employee Class
+//Task 1: Creating an Employee Class and Task 4(modification): Implementing a Payroll System
 
 class Employee {                                    //created a class with 2 string and 2 number variables
     constructor(name, id, department, salary){
@@ -17,11 +17,16 @@ getDetails() {                                      //added a method that return
 
 
 calculateAnnualSalary() {                            //added a method using the formula that returns employee's salary 
-    return this.salary * 12;
+    if (this.teamSize !== undefined){                   
+        return this.salary * 12 + this.calculateBonus();    //modified calculateAnnualSalary() in the Employee class
+    }else{                                                  //used if else statement to calculate annual salary 
+        return this.salary * 12;                            //basically if an employee does not have a team (teamSize = undefined), the function treats the person as an employee
+    }                                                       //if employee has a team (manager) the bonus is added to the total salary 
+    }
 
 } 
 
-}
+
 
 const emp1 = new Employee("Alice Johnson", 101, "Sales", 5000);     //test data
 
@@ -41,7 +46,7 @@ class Manager extends Employee{                             //created a class "M
     }
 
     calculateBonus(){                                       //method that returns bonus (10% of the manager's annual salary)
-        return this.salary * 0.1;
+        return this.salary * 12 * 0.1;
     }
 
 }
@@ -53,7 +58,7 @@ console.log(mgr1.getDetails());                             //logged the output 
 console.log(mgr1.calculateBonus()); 
 // Expected output: 9600
 
-//Task 3: Creating a Company Class
+//Task 3: Creating a Company Class and Task 4: Implementing a Payroll System
 
 class Company {                                         //created a class with one string variable and and array
     constructor(name){
@@ -70,6 +75,11 @@ class Company {                                         //created a class with o
             console.log(employee.getDetails());         //forEach applies the function requirements for each element of the array
         });
     }
+    
+    //added a method that returns the sum of all employee salaries (manager + employee) to the Company class
+    calculateTotalPayroll(){
+        return this.employees.reduce((total, employee) => total + employee.calculateAnnualSalary(), 0);}  //used reduce to get a single value from the array 
+
 }
 
 const company = new Company("TechCorp");
@@ -79,3 +89,12 @@ company.addEmployee(mgr1);
 company.listEmployees();   //listing all employees in the array
 // "Employee: Alice Johnson, ID: 101, Department: Sales, Salary: $5000"
 // "Manager: John Smith, ID: 201, Department: IT, Salary: $8000, Team Size: 5"
+
+
+//Task 4: Implementing a Payroll System
+//added a method to the company class that returns the sum of all employee salaries (manager + employee) to the Company class
+//modified calculateAnnualSalary() in the Employee class
+//logged total payroll, which includes employee's and manager's salaries + bonus for managers
+console.log(`Total Payroll: $${company.calculateTotalPayroll()}`); 
+// Expected output: 165600 (assuming emp1 and mgr1 salaries)
+
