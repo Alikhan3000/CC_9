@@ -52,3 +52,30 @@ console.log(mgr1.getDetails());                             //logged the output 
 
 console.log(mgr1.calculateBonus()); 
 // Expected output: 9600
+
+//Task 3: Creating a Company Class
+
+class Company {                                         //created a class with one string variable and and array
+    constructor(name){
+        this.name = name;                               //initialized a string property "name"
+        this.employees = [];                            //initialized an array "employees"
+    }
+
+    addEmployee(employee) {                             //method that adds an employee to the array
+        this.employees.push(employee)                   //new variable "employee" is added to the array using .push 
+    }
+
+    listEmployees(){                                    //method that logs employee's details using method from another class
+        this.employees.forEach(function(employee) {
+            console.log(employee.getDetails());         //forEach applies the function requirements for each element of the array
+        });
+    }
+}
+
+const company = new Company("TechCorp");
+
+company.addEmployee(emp1); //added an employee and a manager to the array 
+company.addEmployee(mgr1);
+company.listEmployees();   //listing all employees in the array
+// "Employee: Alice Johnson, ID: 101, Department: Sales, Salary: $5000"
+// "Manager: John Smith, ID: 201, Department: IT, Salary: $8000, Team Size: 5"
