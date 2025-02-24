@@ -42,7 +42,7 @@ class Manager extends Employee{                             //created a class "M
     }
 
     getDetails(){                                           //overrided getDetails to include new property  
-        return `Employee: ${this.name}, ID: ${this.id}, Department: ${this.department}, Salary: $${this.salary}, Team Size: ${this.teamSize}`;
+        return `Manager: ${this.name}, ID: ${this.id}, Department: ${this.department}, Salary: $${this.salary}, Team Size: ${this.teamSize}`;
     }
 
     calculateBonus(){                                       //method that returns bonus (10% of the manager's annual salary)
@@ -75,7 +75,18 @@ class Company {                                         //created a class with o
             console.log(employee.getDetails());         //forEach applies the function requirements for each element of the array
         });
     }
-    
+
+    //Task 5: Implementing Promotions
+
+    promoteToManager(employee, teamSize){                               //created a method in the Company class
+       for (let index = 0; index < this.employees.length; index++) {    //used for loop for the method
+            if (this.employees[index] === employee){
+                this.employees[index] = new Manager (employee.name, employee.id, employee.department, employee.salary, teamSize); //initialized manager properties
+                return;                                                 //returned the object with updated position
+            }
+        
+       } 
+    }
     //added a method that returns the sum of all employee salaries (manager + employee) to the Company class
     calculateTotalPayroll(){
         return this.employees.reduce((total, employee) => total + employee.calculateAnnualSalary(), 0);}  //used reduce to get a single value from the array 
@@ -98,3 +109,10 @@ company.listEmployees();   //listing all employees in the array
 console.log(`Total Payroll: $${company.calculateTotalPayroll()}`); 
 // Expected output: 165600 (assuming emp1 and mgr1 salaries)
 
+
+//Task 5: Implementing Promotions
+
+//created a method in the Company class
+company.promoteToManager(emp1, 3);      
+company.listEmployees();                //list all employees and their details
+// Expected output: "Manager: Alice Johnson, ID: 101, Department: Sales, Salary: $5000, Team Size: 3"
